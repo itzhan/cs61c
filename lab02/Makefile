@@ -24,12 +24,14 @@ VECTOR_PROG=vector-test
 BINARIES=$(VECTOR_PROG) $(BIT_OPS_PROG) $(LFSR_PROG)
 
 all: $(BINARIES)
-
 $(BIT_OPS_PROG): $(BIT_OPS_OBJS)
 	$(CC) $(CFLAGS) -g -o $(BIT_OPS_PROG) $(BIT_OPS_OBJS) $(LDFLAGS)
 
 $(LFSR_PROG): $(LFSR_OBJS)
 	$(CC) $(CFLAGS) -g -o $(LFSR_PROG) $(LFSR_OBJS) $(LDFLAGS)
+
+$(VECTOR_PROG): $(VECTOR_OBJS)
+	$(CC) $(CFLAGS) -g -o $(VECTOR_PROG) $(VECTOR_OBJS) $(LDFLAGS)
 
 lfsr.c: lfsr.h
 test_lfsr.c: lfsr.h
