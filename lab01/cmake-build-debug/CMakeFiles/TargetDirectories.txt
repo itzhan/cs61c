@@ -1,0 +1,3 @@
+/Users/itzhan/Desktop/Code/cs61c/lab01/cmake-build-debug/CMakeFiles/lab01.dir
+/Users/itzhan/Desktop/Code/cs61c/lab01/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/itzhan/Desktop/Code/cs61c/lab01/cmake-build-debug/CMakeFiles/rebuild_cache.dir
