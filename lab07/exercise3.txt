@@ -10,6 +10,7 @@ Part 1
     Checkoff Question 1:
     Checkoff Question 2:
 
+
 Part 2
     blocksize = 50, n = 10000:
     blocksize = 100, n = 10000:

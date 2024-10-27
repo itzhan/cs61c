@@ -1,6 +1,6 @@
 Scenario 1
-    1.
-    2.
+    1. 将map方式换成4-way set
+    2. 将map方式换成fully
     3.
 
 Scenario 2
