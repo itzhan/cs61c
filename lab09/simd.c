@@ -50,12 +50,32 @@ long long int sum_simd(int vals[NUM_ELEMS]) {
 	__m128i _127 = _mm_set1_epi32(127);		// This is a vector with 127s in it... Why might you need this?
 	long long int result = 0;				   // This is where you should put your final result!
 	/* DO NOT DO NOT DO NOT DO NOT WRITE ANYTHING ABOVE THIS LINE. */
-	
+
 	for(unsigned int w = 0; w < OUTER_ITERATIONS; w++) {
 		/* YOUR CODE GOES HERE */
+        __m128i sum = _mm_setzero_si128();
+        for (unsigned int i = 0; i < NUM_ELEMS / 8 * 8; i += 8){
+            __m128i data1 = _mm_load_si128((__m128i*)&vals[i]);
+            __m128i data2 = _mm_load_si128((__m128i*)&vals[i + 4]);
+
+            __m128i compare1 = _mm_cmpgt_epi32(data1, _127);
+            data1 = _mm_and_si128(data1, compare1);
+            __m128i compare2 =  _mm_cmpgt_epi32(data2, _127);
+            data2 = _mm_and_si128(data2, compare1);
+
+            sum += _mm_add_epi32(data1, data2);
+        }
+
+        int tmp[4];
+        _mm_store_epi32(tmp, sum);
+        for (int j = 0; j < 4; j++){
+            result += (long long int)tmp[j];
+        }
 
 		/* You'll need a tail case. */
-
+        for (unsigned int i = NUM_ELEMS / 8 * 8; i < NUM_ELEMS; i ++){
+            result += vals[i];
+        }
 	}
 	clock_t end = clock();
 	printf("Time taken: %Lf s\n", (long double)(end - start) / CLOCKS_PER_SEC);
@@ -71,6 +91,36 @@ long long int sum_simd_unrolled(int vals[NUM_ELEMS]) {
 		/* MODIFY IT BY UNROLLING IT */
 
 		/* You'll need 1 or maybe 2 tail cases here. */
+        __m128i sum = _mm_setzero_si128();
+        for (unsigned int i = 0; i < NUM_ELEMS / 16 * 16; i += 16){
+            __m128i data1 = _mm_load_si128((__m128i*)&vals[i]);
+            __m128i data2 = _mm_load_si128((__m128i*)&vals[i + 4]);
+            __m128i data3 = _mm_load_si128((__m128i*)&vals[i + 8]);
+            __m128i data4 = _mm_load_si128((__m128i*)&vals[i + 12]);
+
+            __m128i compare1 = _mm_cmpgt_epi32(data1, _127);
+            data1 = _mm_and_si128(data1, compare1);
+            __m128i compare2 =  _mm_cmpgt_epi32(data2, _127);
+            data2 = _mm_and_si128(data2, compare1);
+            __m128i compare3 = _mm_cmpgt_epi32(data3, _127);
+            data3 = _mm_and_si128(data3, compare1);
+            __m128i compare4 =  _mm_cmpgt_epi32(data4, _127);
+            data4 = _mm_and_si128(data4, compare1);
+
+            sum += _mm_add_epi32(data1, data2);
+            sum += _mm_add_epi32(data3, data4);
+        }
+
+        int tmp[4];
+        _mm_store_epi32(tmp, sum);
+        for (int j = 0; j < 4; j++){
+            result += (long long int)tmp[j];
+        }
+
+        /* You'll need a tail case. */
+        for (unsigned int i = NUM_ELEMS / 16 * 16; i < NUM_ELEMS; i ++){
+            result += vals[i];
+        }
 
 	}
 	clock_t end = clock();
