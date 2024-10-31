@@ -1,6 +1,6 @@
-CC=gcc
-CFLAGS= -std=gnu99 -c -fopenmp
-LDFLAGS=-fopenmp
+CC=clang
+CFLAGS= -std=gnu99 -c -fopenmp -I/opt/homebrew/opt/llvm/include -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+LDFLAGS=-fopenmp -L/opt/homebrew/opt/llvm/lib -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -stdlib=libc++
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLES=v_add dotp hello server_basic server_process
 
