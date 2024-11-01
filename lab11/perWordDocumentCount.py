@@ -19,14 +19,14 @@ def flatMapFunc(document):
     """
     documentID = document[0]
     words = re.findall(r"\w+", document[1])
-    return words
+    return [(word, documentID) for word in words]
 
 def mapFunc(arg):
     """
     Create `(key, value)` pairs.
     You may need to modify this code.
     """
-    return (arg, 1)
+    return (arg[0], 1)
 
 def reduceFunc(arg1, arg2):
     """
@@ -46,7 +46,9 @@ def perWordDocumentCount(file_name, output="spark-wc-out-perWordDocumentCount"):
     """
     counts = file.flatMap(flatMapFunc) \
                  .map(mapFunc) \
-                 .reduceByKey(reduceFunc)
+                 .reduceByKey(reduceFunc) \
+                 .distinct() \
+                 .sortByKey()
 
     counts.coalesce(1).saveAsTextFile(output)
 
